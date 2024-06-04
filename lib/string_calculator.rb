@@ -6,8 +6,8 @@ class StringCalculator
     delimiter = /,|\n/
     if string.start_with?("//")
       parts = string.split("\n", 2)
-      if parts[0] =~ /\/\/\[(.+)\]/
-        delimiter = Regexp.escape($1)
+      if parts[0] =~ /\/\/(\[.+?\])+/
+        delimiter = parts[0].scan(/\[(.+?)\]/).map { |d| Regexp.escape(d[0]) }.join('|')
       else
         delimiter = Regexp.escape(parts[0][2])
       end
