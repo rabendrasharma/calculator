@@ -1,3 +1,4 @@
+# lib/string_calculator.rb
 class StringCalculator
   def add(string)
     return 0 if string.empty?
@@ -5,7 +6,11 @@ class StringCalculator
     delimiter = /,|\n/
     if string.start_with?("//")
       parts = string.split("\n", 2)
-      delimiter = Regexp.escape(parts[0][2])
+      if parts[0] =~ /\/\/\[(.+)\]/
+        delimiter = Regexp.escape($1)
+      else
+        delimiter = Regexp.escape(parts[0][2])
+      end
       string = parts[1]
     end
 
